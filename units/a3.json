@@ -1,0 +1,18 @@
+{
+	"BleAddr": "98:07:2D:41:57:04",
+	"CalibrationPosition": [1.64, 1.1, 1.66],
+	"CalibrationMagnetud": [40.0, 25.0, 40.0],
+	"WriteSleep": 0.00001,
+	"BlePackageSize": 200,
+	"Packages": 10,
+	"DataLen": 181,
+	"SaveToFile": true,
+	"Plot": true,
+	"PlotRes": 1,
+	"Upload": false,
+	"FileName": "u1",
+	"BlePipe": "fifo/a3",
+	"SavePipe": "u3_save",
+	"PlotPipe": "u3_plot",
+	"PrintPlotErrors": true
+}
