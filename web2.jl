@@ -38,7 +38,7 @@ app.layout = dbc_container(fluid=true, style = Dict("width" => "80%", "padding" 
 				id = "prefix_dd",
 				color="primary",
 				label="Sensor",
-				children = [dbc_dropdownmenuitem(p) for p∈prefixes("backup")]
+				children = [dbc_dropdownmenuitem(p) for p∈prefixes("data")]
 			),
 		width=1),
 		dbc_col(
@@ -56,7 +56,7 @@ end
 # Callbacks
 # ===================
 callback!(app, Output("p0", "figure"), [Input("ub", "n_clicks"), Input("prefix_dd", "children")]) do x, y
-	s = JSON.parsefile("units/a3.json")
+	s = JSON.parsefile("units/a1.json")
 	t, dd_name, data = [], "None", zeros(1, 3)
 	# getiing the prefix
 	for i=1:3
@@ -70,7 +70,7 @@ callback!(app, Output("p0", "figure"), [Input("ub", "n_clicks"), Input("prefix_d
 		dd_name = y[argmax(t)][:props][:children]
 		t0 = time()
 		for i=1:10
-			path = "backup/"*dd_name*"_"*string(i)
+			path = "data/"*dd_name*"_"*string(i)
 			try
 				println("reading file: "*path)
 				data = vcat(data, @pipe file_to_numbers(path, s) |> hcat(_...))

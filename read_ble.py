@@ -51,7 +51,7 @@ class BleSensor:
             #logger.write(str(i)+'\n')
             time.sleep(self.sleep)
             gatt.expect("\r\n")
-            z = gatt.before.decode()[82:]
+            z = gatt.before.decode()[82:-1]
             #logger.write(str(i)+z+'\n')
             #t = np.round(time.time() - t0, 2)
             #t = time.time()
@@ -77,7 +77,7 @@ if __name__ == '__main__':
   
   ble = BleSensor(
       settings["BleAddr"],
-      settings["BlePipe"], 
+      "fifo/a1", 
       settings["WriteSleep"], 
       settings["BlePackageSize"],
       settings["Packages"]
