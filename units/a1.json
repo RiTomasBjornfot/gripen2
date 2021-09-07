@@ -4,7 +4,7 @@
 	"CalibrationMagnetud": [1.0, 1.0, 1.0],
 	"WriteSleep": 0.00001,
 	"BlePackageSize": 100,
-	"Packages": 10,
+	"Packages": 3,
 	"DataLen": 198,
 	"SaveToFile": true,
 	"Plot": true,
