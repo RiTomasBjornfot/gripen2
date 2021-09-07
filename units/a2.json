@@ -1,17 +1,13 @@
 {
 	"BleAddr": "80:6F:B0:ED:38:33",
-	"CalibrationPosition": [1.0, 1.0, 1.0],
+	"CalibrationPosition": [1.64, 1.64, 1.1],
 	"CalibrationMagnetud": [1.0, 1.0, 1.0],
-	"WriteSleep": 0.0001,
+	"WriteSleep": 0.00001,
 	"BlePackageSize": 200,
 	"Packages": 10,
-	"DataLen": 201,
+	"DataLen": 198,
 	"SaveToFile": true,
 	"Plot": true,
-	"PlotRes": 1,
 	"Upload": false,
-	"FileName": "u2",
-	"BlePipe": "fifo/a2",
-	"SavePipe": "u2_save",
-	"PlotPipe": "u2_plot"
+	"BlePipe": "fifo/a2"
 }

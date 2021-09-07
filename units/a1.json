@@ -1,18 +1,13 @@
 {
 	"BleAddr": "80:6F:B0:ED:36:D6",
-	"CalibrationPosition": [1.0, 1.0, 1.0],
+	"CalibrationPosition": [1.64, 1.64, 1.63],
 	"CalibrationMagnetud": [1.0, 1.0, 1.0],
 	"WriteSleep": 0.00001,
-	"BlePackageSize": 100,
-	"Packages": 3,
+	"BlePackageSize": 200,
+	"Packages": 10,
 	"DataLen": 198,
 	"SaveToFile": true,
 	"Plot": true,
-	"PlotRes": 1,
 	"Upload": false,
-	"FileName": "u1",
-	"BlePipe": "fifo/a1",
-	"SavePipe": "u1_save",
-	"PlotPipe": "u1_plot",
-	"PrintPlotErrors": true
+	"BlePipe": "fifo/a1"
 }

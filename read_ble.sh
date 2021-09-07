@@ -4,4 +4,6 @@ rm data/$UNIT_*
 rm fifo/$UNIT 
 mkfifo fifo/$UNIT 
 echo "Connecting to unit "$1
+echo $(date)
 ./read_ble.py units/$UNIT.json
+echo $(date)

@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-import pexpect, time, json, sys
+import pexpect, time, json, sys, os
 import numpy as np
-import os
+from pdb import set_trace
 
 class BleSensor:
     def __init__(self, addr, pname, sleep, psize, pcount):
@@ -77,7 +77,7 @@ if __name__ == '__main__':
   
   ble = BleSensor(
       settings["BleAddr"],
-      "fifo/a1", 
+      settings["BlePipe"],
       settings["WriteSleep"], 
       settings["BlePackageSize"],
       settings["Packages"]

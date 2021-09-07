@@ -9,6 +9,7 @@ using JSON, PlotlyBase, Pipe
 line_to_numbers(y) = @pipe (split(y, " ")    
   |> [_[i+1]*_[i] for i in 1:2:length(_)-1]    
   |> parse.(Int, _, base=16)    
+	|> _[1:end-9]
 )
 # convert numbers to real physical values 
 to_real(y, s, i) = @pipe (y    

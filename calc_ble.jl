@@ -11,6 +11,7 @@ end
 tonum(y) = @pipe (split(y, " ") 
 	|> [_[i+1]*_[i] for i in 1:2:length(_)-1] 
 	|> parse.(Int, _, base=16)
+	|> _[1:end-9]
 )
 
 pcalc(y) = @pipe ([mean(y[i:3:length(y)]) for i=1:3]
@@ -20,8 +21,8 @@ pcalc(y) = @pipe ([mean(y[i:3:length(y)]) for i=1:3]
 	|> _ ./ s["CalibrationMagnetud"]
 )
 
-#barplot(arr) = bar([1,2,3], arr, legend = false, ylims = (-1, 1)) |> display
-barplot(arr) = bar([1,2,3], arr, legend = false) |> display
+barplot(arr) = bar([1,2,3], arr, legend = false, ylims = (-1, 1)) |> display
+#barplot(arr) = bar([1,2,3], arr, legend = false) |> display
 
 # MAIN
 # ====
@@ -36,7 +37,7 @@ for ii=1:s["Packages"]
 	while i < s["BlePackageSize"]
 		try
 			push!(ble_str, readline("fifo/"*unit))
-			(i % s["PlotRes"] == 0) && s["Plot"] && tonum(ble_str[end]) |> pcalc |> barplot
+			s["Plot"] && tonum(ble_str[end]) |> pcalc |> barplot
 		catch 
 			println("ERROR in Package: ", ii, " Iteration ", i," length: ", length(ble_str[end]))
 		end
