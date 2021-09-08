@@ -61,16 +61,29 @@ Each BLE unit has a configuration file in the units folder. When the SW is run, 
     ```
     NOTE: When the output is: __[ Info: Listening on: 0.0.0.0:8001]__ the server is up and running.
  2. Start the uploader: 
-    ```
+    ```Check for message __reading from unit__ output from __read_ble.sh__. If no message, no notifications from BLE.
     cd cloud; ./upload.jl
     ```
-    NOTE: The uploader, looks for files in the __data__ folder. When a file is found it uploads it to the server and moves it to the __backup__ folder.
- 4. Start the BLE reader: ```./read_ble.sh <unit>```.
- 5. Start the calculator: ```./calc_ble.sh <unit>```.
- 6. Open http://109.225.89.142:8001/ and view the result
+    *NOTE: The uploader, looks for files in the __data__ folder. When a file is found it uploads it to the server and moves it to the __backup__ folder. It is active for about one hour and it is harmless to kill it whenever needed.*
+ 4. Start the BLE reader: 
+    ```
+    ./read_ble.sh <unit>
+    ```
+    *NOTE: The unit is the name of the JSON, without the .json extension locatyed in the units folder. e.g. units/x.json => x.*  
+  
+ 7. Start the calculator: 
+    ```
+    ./calc_ble.sh <unit>
+    ```
+    *NOTE: make sure that the same <unit> is used. If not, __read_ble.sh__ will pause until data is read from the fifo.*
+  
+ 9. Open http://109.225.89.142:8001/ and view the result
+  
+  *NOTE: To view more then one sensor, open a new web-browser.*
 
  # Tips & Tricks
- * Avoid killing (<ctrl>-<c>) __read_ble.sh__. In certain cases, this can *lock* the BLE and reboot is required.
- * Check for message __reading from unit__ output from __read_ble.sh__. If no message, no notifications from BLE.
- * If changing any feature, kill and restart __upload.jl__ so the new JSON version will be loaded to the server.
- * more...
+  * Check for message __reading from unit__ output from __read_ble.sh__. If no message, no notifications from BLE.
+  * Avoid killing ([ctrl]-[c]) __read_ble.sh__. In certain cases, this can *lock* the BLE and rebooting the BLE is required.
+  * Check for message __reading from unit__ output from __read_ble.sh__. If no message, no notifications from BLE.
+  * If changing any feature, restart __upload.jl__ to let the new JSON version will be loaded to the server.
+  * There is no problem running more then one BLE unit at the same time. The esiest way is to this, is open new set of terminals and run the SW inte samme manner as the other BLE. Just make sure that a different Named Pipe is used. Do this by using another JSON file as command line argument.  
