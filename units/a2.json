@@ -6,8 +6,5 @@
 	"BlePackageSize": 200,
 	"Packages": 10,
 	"DataLen": 198,
-	"SaveToFile": true,
-	"Plot": true,
-	"Upload": false,
-	"BlePipe": "fifo/a2"
+	"Plot": true
 }

@@ -4,10 +4,7 @@
 	"CalibrationMagnetud": [1.0, 1.0, 1.0],
 	"WriteSleep": 0.00001,
 	"BlePackageSize": 200,
-	"Packages": 10,
+	"Packages": 1,
 	"DataLen": 198,
-	"SaveToFile": true,
-	"Plot": true,
-	"Upload": false,
-	"BlePipe": "fifo/a1"
+	"Plot": true
 }
