@@ -1,26 +1,23 @@
 # Gripen
-This is the demonstator software for the Gripen project. The goal is to measure acceleration data from two bluetooth connected devices. The software shall work "out of box" with basic computer knowlage. Features can be set only by editing a text file (see __Features__). 
+This is the demonstator software for the Gripen project. The goal is to measure acceleration data from two bluetooth connected devices and tempurature from one device. The software shall work "out of box" with basic computer knowlage. Features can be set only by editing a text file (see __Features__). 
 
 # Limitations
 The system is not a real time system. Therefore there may be some time difference between the actual event and displaying of the event. Also, the plotting feature may skip some values to prioritize synchronisation over accuracy.
 
-To give similar system performace regardless of number of blutooth devices or featur2386
-e settings. The system uses paralell processing.  
+To give similar system performace regardless of number of blutooth devices or feature settings. The system uses paralell processing.  
 
 # Prerequisits
  - Raspberry Pi with latest Raspbian OS
+ - BlueZ
  - Python 3.x
+ - Julia 1.6.x
 
-# How to get started
+# Setup
  1. Download this repository to your __gripen__ folder
  2. Turn on the BLE and type ```sudo hcitool lescan``` in the terminal
- 3. In the output, locate your device and copy the address. 
- 4. Copy the *defaultunit.json* file to *<myunit>.json* ```cp defaultunit.json <myunit>.json```.
- 5. Open *<myunit>.json* and paste the ble address as __BleAddr__ value.
+ 3. In the output, locate your device and copy the MAC address. 
+ 5. Open the corresponding *.json* file and paste the ble address as __BleAddr__ value.
  6. Set a name for your named pipe as __BlePipe__ value.
- 7. Create the named pipe ```mkfifo <name>```
- 8. As above, set a name for your named pipe as __SavePipe__ value.
- 9. Create the named pipe ```mkfifo <name>```
 
  # Features
  This is a description of the features in the json file
