@@ -1,5 +1,20 @@
 # Gripen
-This is the demonstator software for the Gripen project. The goal is to measure acceleration data from two bluetooth connected devices and tempurature from one device. The software shall work "out of box" with basic computer knowlage. Features can be set only by editing a text file (see __Features__). 
+This is the demonstator software for the Gripen project. The demonstator shall show measurements of acceleration data from two acceleration sensors and one tempurature sensor connected to a PC and Raspberry Pi 4.  
+
+# Functional SW requirements
+ * It can read data from a BLE unit (type?) via its notification functionallity. 
+ * It can calculate data to physical values.
+ * It can do a live plot of the data.
+ * It can save data to file.
+ * It can upload data to a server.
+ * It has a client that can plot as data as x = time  y = values for each BLE unit.
+  
+# Non-functional SW requirements
+ * The SW package has a basic description.
+ * The SW can be run "out of box" with basic computer knowlage. 
+ * All essential SW features can be set by editing a text file (see __Features__).
+ * The SW has sufficient performance to grab all data from BLE unit when installed on a RPi 4 (approx 90 values each 0.03 s).
+ * The SW has sufficient performance to perform live plotting of the mean values per package without delaying the grabbing.  
 
 # Limitations
 The system is not a real time system. Therefore there may be some time difference between the actual event and displaying of the event. Also, the plotting feature may skip some values to prioritize synchronisation over accuracy.
@@ -7,19 +22,20 @@ The system is not a real time system. Therefore there may be some time differenc
 To give similar system performace regardless of number of blutooth devices or feature settings. The system uses paralell processing.  
 
 # Prerequisits
- - Raspberry Pi with latest Raspbian OS
+ - PC with Debian or Raspberry Pi with latest Raspbian OS
  - BlueZ
  - Python 3.x
  - Julia 1.6.x
 
-# Setup
- 1. Download this repository to your __gripen__ folder
- 2. Turn on the BLE and type ```sudo hcitool lescan``` in the terminal
+# Getting started
+Each BLE unit has a configuration file in the units folder. When the programs to gather the data is run, it look for a configuration file for the BLE unit.
+ 1. Download this repository to your __gripen__ folder.
+ 2. Turn on the BLE and type ```sudo hcitool lescan``` in the terminal.
  3. In the output, locate your device and copy the MAC address. 
  5. Open the corresponding JSON file from the units folder and update the  __BleAddr__ value.
 
  # Features
- This is a description of the features in the json file
+  This is a description of the features in the json file.
  
  Key | Value | Description
  --- | --- | ---
@@ -36,7 +52,7 @@ To give similar system performace regardless of number of blutooth devices or fe
  1. Start the web-server: 
     ```
     > cd cloud/dev; ./ssh_connect.sh
-    > ./servers/gripen/web2.jl
+    > cd servers/gripen2; ./web2.jl
     ```
     NOTE: When the output is: __[ Info: Listening on: 0.0.0.0:8001]__ the server is up and running.
  2. Start the uploader: ```cd cloud; ./upload.jl```
