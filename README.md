@@ -1,7 +1,7 @@
 # Gripen
-This is the demonstator software for the Gripen project. The demonstator shall show measurements of acceleration data from two acceleration sensors and one tempurature sensor connected to a PC and Raspberry Pi 4.  
+This is the demonstator software for the Gripen project. The demonstator shall show measurements of acceleration data from two sensors and tempurature from one sensor. The sensors are conected to a PC and Raspberry Pi 4 over BLE.  
 
-# Functional SW requirements
+# Functional requirements
  * It can read data from a BLE unit (type?) via its notification functionallity. 
  * It can calculate data to physical values.
  * It can do a live plot of the data.
@@ -9,7 +9,7 @@ This is the demonstator software for the Gripen project. The demonstator shall s
  * It can upload data to a server.
  * It has a client that can plot as data as x = time  y = values for each BLE unit.
   
-# Non-functional SW requirements
+# Non-functional requirements
  * The SW package has a basic description.
  * The SW can be run "out of box" with basic computer knowlage. 
  * All essential SW features can be set by editing a text file (see __Features__).
@@ -17,9 +17,14 @@ This is the demonstator software for the Gripen project. The demonstator shall s
  * The SW has sufficient performance to perform live plotting of the mean values per package without delaying the grabbing.  
 
 # Limitations
-The system is not a real time system. Therefore there may be some time difference between the actual event and displaying of the event. Also, the plotting feature may skip some values to prioritize synchronisation over accuracy.
+  * The system is not a real time system. Therefore there may be some time difference between the actual event and displaying of the event. Also, the plotting feature may skip some values to prioritize synchronisation over accuracy.
 
-To give similar system performace regardless of number of blutooth devices or feature settings. The system uses paralell processing.  
+# The software topology
+Each BLE unit has a configuration file in the units folder. When the SW is run, it look for a configuration file for the BLE unit. The software is split into 4 different programs. that is to separate tasks in sub-processed for the OS in order to gain performance. 
+  * __read_ble.sh__, reads the notification output from the BLE and sends to a Named Pipe (fifo).
+  * __calc_ble.jl__, reads the data in the Named Pipe, calculates it into physical values and saves the result to files. It also handles the live plotting.
+  * __upload.jl__, uploads the files to the server.
+  * __web2.jl__, the server program.
 
 # Prerequisits
  - PC with Debian or Raspberry Pi with latest Raspbian OS
@@ -28,14 +33,14 @@ To give similar system performace regardless of number of blutooth devices or fe
  - Julia 1.6.x
 
 # Getting started
-Each BLE unit has a configuration file in the units folder. When the programs to gather the data is run, it look for a configuration file for the BLE unit.
+Each BLE unit has a configuration file in the units folder. When the SW is run, it look for a configuration file for the BLE unit.
  1. Download this repository to your __gripen__ folder.
  2. Turn on the BLE and type ```sudo hcitool lescan``` in the terminal.
  3. In the output, locate your device and copy the MAC address. 
  5. Open the corresponding JSON file from the units folder and update the  __BleAddr__ value.
 
  # Features
-  This is a description of the features in the json file.
+  This is a description of the features in the JSON file.
  
  Key | Value | Description
  --- | --- | ---
@@ -55,18 +60,17 @@ Each BLE unit has a configuration file in the units folder. When the programs to
     > cd servers/gripen2; ./web2.jl
     ```
     NOTE: When the output is: __[ Info: Listening on: 0.0.0.0:8001]__ the server is up and running.
- 2. Start the uploader: ```cd cloud; ./upload.jl```
- 3. Start the BLE reader: ```./read_ble.sh <unit>```.
- 4. Start the calculator: ```./calc_ble.sh <unit>```.
- 8. Set __WriteSize__ and __BlePackageSize__ to __5__.
- 9. Open a terminal and type: ```./pygatt.py newdevice.json```
- 10. Open a new terminal and type: ```./reader.py newdevice.json```
- 11. Check the *.<__BlePipe__>.log* contains expected result
- 12. Check that file and *<__BlePipe__>_<unixtime>.txt* contains data
- 13. Open http://109.225.89.142:8001/ and view the result
+ 2. Start the uploader: 
+    ```
+    cd cloud; ./upload.jl
+    ```
+    NOTE: The uploader, looks for files in the __data__ folder. When a file is found it uploads it to the server and moves it to the __backup__ folder.
+ 4. Start the BLE reader: ```./read_ble.sh <unit>```.
+ 5. Start the calculator: ```./calc_ble.sh <unit>```.
+ 6. Open http://109.225.89.142:8001/ and view the result
 
  # Tips & Tricks
- * Avoid killing (<ctrl>-<c>)
+ * Avoid killing (<ctrl>-<c>) __read_ble.sh__. In certain cases, this can *lock* the BLE and reboot is required.
  * Check for message __reading from unit__ output from __read_ble.sh__. If no message, no notifications from BLE.
  * If changing any feature, kill and restart __upload.jl__ so the new JSON version will be loaded to the server.
  * more...
