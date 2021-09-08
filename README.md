@@ -56,8 +56,8 @@ Each BLE unit has a configuration file in the units folder. When the programs to
     ```
     NOTE: When the output is: __[ Info: Listening on: 0.0.0.0:8001]__ the server is up and running.
  2. Start the uploader: ```cd cloud; ./upload.jl```
- 3. Start the BLE reader: ``` ./read_ble.sh <unit>```.
- 4. Start the calculator: ``` ./calc_ble.sh <unit>```.
+ 3. Start the BLE reader: ```./read_ble.sh <unit>```.
+ 4. Start the calculator: ```./calc_ble.sh <unit>```.
  8. Set __WriteSize__ and __BlePackageSize__ to __5__.
  9. Open a terminal and type: ```./pygatt.py newdevice.json```
  10. Open a new terminal and type: ```./reader.py newdevice.json```
@@ -66,6 +66,7 @@ Each BLE unit has a configuration file in the units folder. When the programs to
  13. Open http://109.225.89.142:8001/ and view the result
 
  # Tips & Tricks
+ * Avoid killing (<ctrl>-<c>)
  * Check for message __reading from unit__ output from __read_ble.sh__. If no message, no notifications from BLE.
- * If changing any JSON file kill and restart __upload.jl__ so the new versions will be loaded to the server.
- * 
+ * If changing any feature, kill and restart __upload.jl__ so the new JSON version will be loaded to the server.
+ * more...
