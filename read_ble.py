@@ -72,7 +72,7 @@ class BleSensor:
       #logger.close()
 
 if __name__ == '__main__':
-  with open(sys.argv[1], "r") as fp:
+  with open("units/"+sys.argv[1]+".json", "r") as fp:
     settings = json.load(fp)
   
   ble = BleSensor(
