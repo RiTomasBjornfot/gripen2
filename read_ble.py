@@ -77,7 +77,7 @@ if __name__ == '__main__':
   
   ble = BleSensor(
       settings["BleAddr"],
-      settings["BlePipe"],
+      "fifo/"+sys.argv[1],
       settings["WriteSleep"], 
       settings["BlePackageSize"],
       settings["Packages"]
