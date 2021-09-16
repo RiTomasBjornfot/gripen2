@@ -55,6 +55,7 @@ class BleSensor:
             #logger.write(str(i)+z+'\n')
             #t = np.round(time.time() - t0, 2)
             #t = time.time()
+            print(z, time.time())
             if len(z.split(' ')) == settings["DataLen"]:
               with open(self.pname, "w") as fp:
                 fp.write(z)
