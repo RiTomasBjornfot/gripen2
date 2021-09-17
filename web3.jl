@@ -7,10 +7,16 @@ import JLD
 # ==============
 
 # converts a line (string) to numbers
-line_to_numbers(y) = @pipe (split(y, " ")    
-  |> [_[i+1]*_[i] for i in 1:2:length(_)-1]    
-  |> parse.(Int, _, base=16)    
-)
+function line_to_numbers(y, s)
+	line = @pipe (split(y, " ")    
+  	|> [_[i+1]*_[i] for i in 1:2:length(_)-1]    
+  	|> parse.(Int, _, base=16)    
+	)
+	if s["SensorType"] == "acc"
+		line = line[1:end-9]
+	end
+	return line
+end
 # convert numbers to real physical values 
 to_real(y, s, i) = @pipe (y    
   |> _ * 4.3/2^12    
@@ -18,8 +24,8 @@ to_real(y, s, i) = @pipe (y
   |> _ * 1/6.5e-3
 ) 
 # converts the file the real physical values as [x, y, z]
-function file_to_numbers(fname) 
-	data = map(x -> line_to_numbers(x), readlines(fname)) |> Iterators.flatten |> collect
+function file_to_numbers(fname, s) 
+	data = map(x -> line_to_numbers(x, s), readlines(fname)) |> Iterators.flatten |> collect
 end
 
 # looks in directotry (dir) and finds unique prefixes
@@ -83,21 +89,24 @@ callback!(app, Output("p0", "figure"), [Input("ub", "n_clicks"), Input("prefix_d
 		s = JSON.parsefile("units/$dd_name.json")
 		t0 = time()
 		data = Int64[]
-		for i=1:10
+		for i=1:100
 			try
+				println("iteration: ", i)
 				fpath = "data/"*dd_name*"_"*string(i)
-				println("reading file: "*fpath)
-				append!(data, file_to_numbers(fpath))
+				println("try to read file: "*fpath)
+				x = file_to_numbers(fpath, s)
+				println("typeof: ", typeof(x))
+				println("size: ", size(x))
+				append!(data, x)
+				println("")
 			catch
+				println("loop exit")
 				break
 			end
-			if s["SensorType"] == "acc"
-				JLD.save("data.jld","data", data)
-				data = @pipe [data[i:3:end] for i=1:3] |> hcat(_...)
-				JLD.save("data_acc.jld","data", data)
-				#data = vcat(data, @pipe file_to_numbers(fpath, s) |> hcat(_...))
-			end
-			println("time: ", time() - t0)
+		end
+		println("time: ", time() - t0)
+		if s["SensorType"] == "acc"
+			data = @pipe [data[i:3:end] for i=1:3] |> hcat(_...)
 		end
 	end
 	Plot(data, title="Sensor: "*dd_name)

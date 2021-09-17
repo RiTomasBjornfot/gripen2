@@ -6,5 +6,6 @@
 	"BlePackageSize": 200,
 	"Packages": 10,
 	"DataLen": 198,
-	"Plot": true
+	"SensorType": "acc",
+	"Plot": false
 }

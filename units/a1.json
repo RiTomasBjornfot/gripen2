@@ -4,7 +4,8 @@
 	"CalibrationMagnetud": [1.0, 1.0, 1.0],
 	"WriteSleep": 0.00001,
 	"BlePackageSize": 200,
-	"Packages": 5,
+	"Packages": 10,
 	"DataLen": 198,
-	"Plot": true
+	"SensorType": "acc",
+	"Plot": false
 }
