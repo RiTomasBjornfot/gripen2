@@ -106,7 +106,11 @@ callback!(app, Output("p0", "figure"), [Input("ub", "n_clicks"), Input("prefix_d
 		end
 		println("time: ", time() - t0)
 		if s["SensorType"] == "acc"
-			data = @pipe [data[i:3:end] for i=1:3] |> hcat(_...)
+			data = @pipe (data 
+				|> [_[i:3:end] for i=1:3]
+				|> [x[1:minimum(length.(_))] for x∈_]
+				|> hcat(_...)
+			)
 		end
 	end
 	Plot(data, title="Sensor: "*dd_name)

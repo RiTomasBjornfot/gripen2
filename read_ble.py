@@ -42,9 +42,6 @@ class BleSensor:
       gatt.sendline("char-write-cmd 1E 53")
       print("reading from unit")
       t0 = time.time()
-      #i = 0
-      #while i < 2*self.count+2:
-      #for i in range(int(1e9)):
       i = 0
       while i < self.psize*self.pcount:
         try:
@@ -52,10 +49,6 @@ class BleSensor:
             time.sleep(self.sleep)
             gatt.expect("\r\n")
             z = gatt.before.decode()[82:-1]
-            #logger.write(str(i)+z+'\n')
-            #t = np.round(time.time() - t0, 2)
-            #t = time.time()
-            print(z, time.time())
             if len(z.split(' ')) == settings["DataLen"]:
               with open(self.pname, "w") as fp:
                 fp.write(z)
